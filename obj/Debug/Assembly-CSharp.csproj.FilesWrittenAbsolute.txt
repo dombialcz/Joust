@@ -1,0 +1,17 @@
+/Users/dominik/Development/joust/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/dominik/Development/joust/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/dominik/Development/joust/obj/Debug/Assembly-CSharp.dll
+/Users/dominik/Development/joust/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/dominik/Development/joust/Temp/bin/Debug/UnityEngine.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/UnityEditor.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/Mono.Cecil.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/Unity.DataContract.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/dominik/Development/joust/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/dominik/Development/joust/Temp/bin/Debug/Mono.Cecil.Mdb.dll

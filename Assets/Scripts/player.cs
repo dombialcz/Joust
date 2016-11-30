@@ -2,61 +2,56 @@
 using System.Collections;
 
 public class player : MonoBehaviour {
+	
+	public LayerMask blockingLayer;
 
-	public float speedModifier = 10;
-	public float step = 0.5f;
-
+	public float speed = 1f;
+	public float step = TileManager.horizontalSpacing;
 	private bool moving;
-
 	private Vector3 pos;
-	private float posXstart;
-	private float posXprogress;
-	private float posXend;
 
-	private float posYstart;
-	private float posyend;
+	private BoxCollider2D boxCollider;
+	private Rigidbody2D rb2d;
 
-	
-	
 	// Use this for initialization
 	void Start () {
+		boxCollider = GetComponent<BoxCollider2D> ();
+		rb2d = GetComponent<Rigidbody2D> ();
 		moving = false;
-		posXprogress = 0;
 	}
 
-	void move () {
-		pos = transform.position;
+	IEnumerator Move (int direction) {
+		moving = true;
 
+		Vector2 start = transform.position;
+		Vector2 end = start + new Vector2 (step * direction, 0f);
+		//float inverseMoveTime = 1f / moveTime;
+		Rigidbody2D rb2d = GetComponent<Rigidbody2D> ();
 
-		pos.x = Mathf.Lerp(posXstart, posXend, posXprogress);
+		float sqrRemainingDistance = (transform.position - (Vector3)end).sqrMagnitude;
 
-
-		transform.position = pos;
-		
-		if ( pos.x == posXend) {
-			moving = false;
-			posXprogress = 0f;
+		while (sqrRemainingDistance > float.Epsilon) {
+			Vector3 newPosition = Vector3.MoveTowards (transform.position, end, speed* Time.deltaTime); //inverseMoveTime * Time.deltaTime
+			rb2d.MovePosition (newPosition);
+			sqrRemainingDistance = (transform.position - (Vector3)end).sqrMagnitude;
+			yield return null;
 		}
 
+		moving = false;
+
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		if (Input.GetKey(KeyCode.LeftArrow)) {
-			posXprogress = 0f;
-			moving = true;
-			posXstart = transform.position.x;
-			posXend = posXstart - step;
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
-			posXprogress = 0f;
-			posXstart = transform.position.x;
-			posXend = posXstart + step;
-			moving = true;
-		} 
 
-		if (moving) {
-			posXprogress += Time.deltaTime * speedModifier;
-			move ();
+		int horizontal = 0;
+		int vertical = 0;
+
+		horizontal = (int) (Input.GetAxisRaw ("Horizontal"));
+		vertical = (int) (Input.GetAxisRaw ("Vertical"));
+
+		if ( (horizontal != 0 || vertical != 0) && !moving) {
+			StartCoroutine(Move(horizontal));
 		}
 	}
+
 }
