@@ -7,16 +7,14 @@ using Random = UnityEngine.Random;
 public class ItemManager : ScrollingObjectManager {
 
 	public GameObject[] items;	 //Array of floor prefabs. Set in UI editor
-	private List <GameObject> itemList = new List <GameObject> ();	
+	private List <GameObject> itemList = new List <GameObject> ();
 
 	public int maxNumberOfItems = 1;
 
-	private float spawnTimer;
 
 	// Use this for initialization
 	void Start () {
 		onBottomMarginReached = DestroyItem;
-		spawnTimer = 0f;
 		InvokeRepeating("SpawnItem", 2.0f, 5f);
 	}
 
@@ -27,7 +25,7 @@ public class ItemManager : ScrollingObjectManager {
 	}
 
 	private void CreateItem (){
-		int randomRow =  (int)Random.Range (0, GameManager.rows);
+		int randomRow =  (int)Random.Range (0, GameManager.columns +1);
 		print (" randomRow: " + randomRow);
 		CreateItemAtRow (randomRow);
 	}
@@ -38,20 +36,15 @@ public class ItemManager : ScrollingObjectManager {
 		GameObject newItem = CreateInstance (toInstantiate, GetRowX (rowNumber), GameManager.topMargin);
 		itemList.Add (newItem);
 	}
-	
-	// Update is called once per frame
+		
 	void Update () {
-		foreach (GameObject item in (new List <GameObject> (itemList))) {
+		foreach (GameObject item in (new List <GameObject> (itemList)))
 			ScrollDown (item);
-		}
-
 	}
 
+	//TODO: make sure two items dont spawn at the same row
 	private void SpawnItem () {
 		if ( (maxNumberOfItems > itemList.Count) )
-		{
-			//CreateItem (Random.Range (0, GameManager.rows));
 			CreateItem ();
-		}
 	}
 }

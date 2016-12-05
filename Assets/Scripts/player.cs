@@ -38,10 +38,23 @@ public class player : MonoBehaviour {
 
 	void CheckForPickupMove <T> (int direction)
 		where T: Component {
-		RaycastHit2D hit;
 
 		Vector2 start = transform.position;
 		Vector2 end = start + new Vector2 (GameManager.horizontalSpacing * direction, 0f);
+
+		//CheckCollision <T> (start, end);
+
+		if (GameManager.IsInsideHorizontalBounds (end)) {
+			StartCoroutine (MoveTo (end));
+		} else {
+			moving = false;
+		}
+
+	}
+
+	void CheckCollision <T>  (Vector2 start, Vector2 end) 
+		where T: Component {
+		RaycastHit2D hit;
 
 		boxCollider.enabled = false;
 		hit = Physics2D.Linecast (start, end, blockingLayer);
@@ -52,13 +65,6 @@ public class player : MonoBehaviour {
 			T hitComponent = hit.transform.GetComponent<T>();
 			Pickup (hitComponent);
 		}
-
-		if (GameManager.IsInsideHorizontalBounds (end)) {
-			StartCoroutine (MoveTo (end));
-		} else {
-			moving = false;
-		}
-
 	}
 
 	void Pickup  <T> (T component)
