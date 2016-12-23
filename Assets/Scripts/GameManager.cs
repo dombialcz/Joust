@@ -14,10 +14,10 @@ public static class GameManager {
 	// scale dependent
 	public static int columns = 4; 										//Number of columns in our game board.
 	public static int rows = 2;											//Number of rows in our game board.
-	public static float bottomMargin = -2f * verticalMultiplier;
-	public static float topMargin = 4f * verticalMultiplier;
+	public static float bottomMargin = -3f * verticalMultiplier; //-2f
+	public static float topMargin = 6f * verticalMultiplier; // 4f
 
-	public static float rowGap = verticalMultiplier %  (Math.Abs (topMargin) - Math.Abs (bottomMargin));
+	public static float rowGap = verticalMultiplier %  (Math.Abs (topMargin) - Math.Abs (bottomMargin)) +scrollStep;
 
 
 	private static float health = 0;

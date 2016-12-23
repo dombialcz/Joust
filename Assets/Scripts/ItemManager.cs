@@ -15,7 +15,7 @@ public class ItemManager : ScrollingObjectManager {
 	// Use this for initialization
 	void Start () {
 		onBottomMarginReached = DestroyItem;
-		InvokeRepeating("SpawnItem", 2.0f, 5f);
+		InvokeRepeating("SpawnItem", 0f, 0.05f);
 	}
 
 	public void DestroyItem (GameObject item)
@@ -24,17 +24,33 @@ public class ItemManager : ScrollingObjectManager {
 		Destroy (item);
 	}
 
+	// Work in progress
 	private void CreateItem (){
-		int randomRow =  (int)Random.Range (0, GameManager.columns +1);
-		print (" randomRow: " + randomRow);
-		CreateItemAtRow (randomRow);
+		// TODO: choose row at random from available rows
+		int rowNumber = 1;// (int)Random.Range (0, GameManager.columns +1);
+
+		// TODO: create a list for rows, choose one randomly and try to create item there
+		// if fails, pick another one, until the list is exhausted (do not repeat indefinately!)
+		if (!CreateItemAtRow (rowNumber)) {
+			CreateItemAtRow (2);
+		}
 	}
 
-	private void CreateItemAtRow (int rowNumber) 
+	private bool CreateItemAtRow (int rowNumber) 
 	{
-		GameObject toInstantiate = items[Random.Range (0,items.Length)];
-		GameObject newItem = CreateInstance (toInstantiate, GetRowX (rowNumber), GameManager.topMargin);
-		itemList.Add (newItem);
+		Vector2 spawnPoint = new Vector2(GetRowX (rowNumber), GameManager.topMargin);
+
+		// Dont spawn near another object
+		// TODO: the circle is too large currently
+		if (Physics2D.OverlapCircle(spawnPoint, 10f)) {
+			return false;
+		} else {
+			GameObject toInstantiate = items [Random.Range (0, items.Length)];
+			GameObject newItem = CreateInstance (toInstantiate, GetRowX (rowNumber), GameManager.topMargin);
+			newItem.GetComponent<BoxCollider2D>().enabled = true;
+			itemList.Add (newItem);
+			return true;
+		}
 	}
 		
 	void Update () {
@@ -42,7 +58,6 @@ public class ItemManager : ScrollingObjectManager {
 			ScrollDown (item);
 	}
 
-	//TODO: make sure two items dont spawn at the same row
 	private void SpawnItem () {
 		if ( (maxNumberOfItems > itemList.Count) )
 			CreateItem ();

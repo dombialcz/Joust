@@ -31,12 +31,12 @@ public class TileManager : ScrollingObjectManager {
 	{
 		int rowCount = (int) Math.Ceiling( (GameManager.topMargin-GameManager.bottomMargin) / GameManager.verticalMultiplier);
 
-		print ("rowCount is: " + rowCount);
 		while (rowCount > 0)
 			AddRow (rowCount--);
 
 	}
 
+	// ensure there are no gaps in tiles
 	float GetLoopingPosition (float verticalOffset ) 
 	{
 		return ((verticalOffset+1f) * (GameManager.verticalMultiplier) + GameManager.bottomMargin - GameManager.rowGap);// verticalOffset cannot be 0
@@ -49,10 +49,12 @@ public class TileManager : ScrollingObjectManager {
 		SetupRow (boardRow [boardRow.Count - 1], (float)(startPosition));
 	}
 
+	// what to do when an object reaches bottom of the playing field
 	private void SetupRowTop (GameObject rowObject) {
 		SetupRow (rowObject, GetLoopingPosition(boardRow.Count-1f));
 	}
 
+	// create a row from available list of tiles
 	private void SetupRow (GameObject rowObject, float verticalOffset) {
 
 		DestroyChildren (rowObject);

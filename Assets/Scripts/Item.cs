@@ -11,9 +11,12 @@ public class Item : MonoBehaviour {
 	public float points = 10f;
 	public float health = 0f;
 
+	public LayerMask layer = 2;
+
 	void Start () {
 		boxCollider = GetComponent<BoxCollider2D> ();
 		rb2d = GetComponent<Rigidbody2D> ();
+		boxCollider.enabled = true;
 	}
 
 	public float getPoints(){
