@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Scenes/Board_Grassland.unity
-  isLoaded: 1
-  isActive: 1
